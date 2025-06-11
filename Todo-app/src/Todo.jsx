@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+
 function Todo() {
   const [tasks, setTasks] = useState([
     { text: "meditate", completed: false },
@@ -7,6 +8,8 @@ function Todo() {
   ]);
 
   const [newTask, setNewTask] = useState("");
+  const [editIndex, setEditIndex] = useState(null);
+  const [editText, setEditText] = useState("");
 
   const HandleInputChange = (event) => {
     setNewTask(event.target.value);
@@ -17,7 +20,7 @@ function Todo() {
     if (trimmed === "" || tasks.some(task => task.text === trimmed)) return;
 
     setTasks([...tasks, { text: trimmed, completed: false }]);
-    setNewTask(""); 
+    setNewTask("");
   };
 
   const HandleRemoveTask = (index) => {
@@ -47,40 +50,75 @@ function Todo() {
     }
   };
 
+  const editTask = (index) => {
+    setEditIndex(index);
+    setEditText(tasks[index].text);
+  };
+
+  const saveTask = (index) => {
+    const trimmed = editText.trim();
+    if (trimmed === "" || tasks.some((task, i) => task.text === trimmed && i !== index)) return;
+
+    const updated = [...tasks];
+    updated[index].text = trimmed;
+    setTasks(updated);
+    setEditIndex(null);
+    setEditText("");
+  };
+
   return (
-    <>
-      <p>Todo List</p>
-      <input
-        type="text"
-        placeholder="Add New task"
-        value={newTask}
-        onChange={HandleInputChange} 
-        onKeyDown={(e) => {
+    <div className="todo-container">
+      <h2 className="todo-title">Todo List</h2>
+      <div className="input-area">
+        <input
+          className="todo-input"
+          type="text"
+          placeholder="Add New Task"
+          value={newTask}
+          onChange={HandleInputChange}
+          onKeyDown={(e) => {
             if (e.key === "Enter") {
               HandleSetTask();
-            }}}
-      />
-      <button onClick={HandleSetTask}>Add task</button>
+            }
+          }}
+        />
+        <button className="add-button" onClick={HandleSetTask}>Add Task</button>
+      </div>
 
-      <ol>
+      <ol className="task-list">
         {tasks.map((task, index) => (
-          <li key={index}>
-            <span
-              onClick={() => CompleteTask(index)}
-              style={{
-                textDecoration: task.completed ? "line-through" : "none",
-                cursor: "pointer",
-              }}
-            >
-              {task.text}
-            </span>{" "}
-            <button onClick={() => HandleRemoveTask(index)}>Delete</button>{" "}
-            <button onClick={() => MoveUP(index)}>Up</button>{" "}
-            <button onClick={() => MoveDown(index)}>Down</button>
+          <li key={index} className="task-item">
+            {editIndex === index ? (
+              <>
+                <input
+                  className="edit-input"
+                  value={editText}
+                  onChange={(e) => setEditText(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") saveTask(index);
+                  }}
+                />
+                <button className="save-button" onClick={() => saveTask(index)}>Save</button>
+              </>
+            ) : (
+              <>
+                <span
+                  className={`task-text ${task.completed ? "completed" : ""}`}
+                  onClick={() => CompleteTask(index)}
+                >
+                  {task.text}
+                </span>
+                <button className="task-button up" onClick={() => MoveUP(index)}>&#9650;</button>
+                <button className="task-button down" onClick={() => MoveDown(index)}>&#9660;</button>                
+                <button className="task-button edit" onClick={() => editTask(index)}>Edit</button>
+                <button className="task-button delete" onClick={() => HandleRemoveTask(index)}>Delete</button>
+
+              </>
+            )}
           </li>
         ))}
       </ol>
-    </>
+    </div>
   );
 }
 
