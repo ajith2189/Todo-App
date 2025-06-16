@@ -1,15 +1,13 @@
 import './App.css'
-import Todo from './Todo'
+
+import StopWatch from './StopWatch2.jsx'
+import Todo from "./Todo.jsx"
 
 
 function App() {
-  
-
   return (
     <>
     <Todo/>
-    
-    
     </>
   )
 }

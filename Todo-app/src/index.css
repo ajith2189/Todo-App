@@ -17,26 +17,34 @@
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
+    
   }
   
   .todo-input, .edit-input {
     flex: 1;
     padding: 8px;
     font-size: 16px;
+    border-radius: 20px;
   }
   
   .add-button, .save-button {
     padding: 8px 12px;
     font-size: 16px;
     cursor: pointer;
+    background-color: #6cd0f5;
+    border-radius: 20px;
   }
   
   .task-list {
     padding-left: 20px;
+    
   }
   
   .task-item {
     margin-bottom: 10px;
+    flex: 1;
+    flex: 1;
+
   }
   
   .task-text {
@@ -58,22 +66,87 @@
   }
   
   .task-button.delete {
-    background-color: #e74c3c;
+    background-color: #ac1808;
     color: white;
+  }
+  .task-button.delete:hover{
+    color: #485d6a;
+    background-color: #ff9393;
   }
   
   .task-button.up {
     background-color: #3498db;
     color: white;
   }
+  .task-button.up:hover{
+    color: #3498db;
+    background-color: #333;
+  }
   
   .task-button.down {
     background-color: #9b59b6;
     color: white;
   }
+  .task-button.down:hover{
+    color: #7b33aa;
+    background-color: #333;
+  }
   
   .task-button.edit {
     background-color: #2ecc71;
     color: white;
+  }
+  .task-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+  }
+  
+  .task-text {
+    flex: 1;
+    word-break: break-word;
+  }
+  button{
+    border-radius: 10px;
+    border-color: #8a8a8a;
+  }
+  .input-wrapper {
+    display: flex;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto 20px;
+    border-radius: 999px; /* fully rounded */
+    background-color: #f0f0f0;
+    overflow: hidden; /* make sure button and input look seamless */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .styled-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 12px 16px;
+    font-size: 16px;
+    background-color: #f0f0f0;
+    color: #333;
+    border-radius: 999px 0 0 999px;
+  }
+  
+  .styled-add-button {
+    background-color: #ff4d3f;
+    color: white;
+    padding: 0 24px;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border-radius: 0 999px 999px 0;
+  }
+  
+  .styled-add-button:hover {
+    background-color: #e84336;
   }
   
