@@ -1,6 +1,6 @@
 import './App.css'
 import Todo from './Todo'
-//main function
+// main function
 
 function App() {
   
