@@ -1,18 +1,20 @@
 import { useState, useRef } from "react";
 
 function Todo() {
+
+  const headingRef = useRef();
+
   const [tasks, setTasks] = useState([
     { text: "meditate", completed: false },
     { text: "exercise", completed: false },
   ]);
-
   const [newTask, setNewTask] = useState("");
   const [editIndex, setEditIndex] = useState(null);
   const [editText, setEditText] = useState("");
 
-  const headingRef = useRef();
+ 
 
-  const changeColor = () => {
+  const HandleChangeColor = () => {
     headingRef.current.style.color = "blue";
   };
 
@@ -23,7 +25,7 @@ function Todo() {
   const HandleSetTask = () => {
     const trimmed = newTask.trim();
     if (trimmed === "") return;
-
+    
     setTasks([...tasks, { text: trimmed, completed: false }]);
     setNewTask("");
   };
@@ -33,7 +35,7 @@ function Todo() {
     setTasks(AfterRemoval);
   };
 
-  const CompleteTask = (index) => {
+  const HandleCompleteTask = (index) => {
     const updated = [...tasks];
     updated[index].completed = !updated[index].completed;
     setTasks(updated);
@@ -61,17 +63,14 @@ function Todo() {
     }
   };
 
-  const editTask = (index) => {
+  const HandleEditTask = (index) => {
     setEditIndex(index);
     setEditText(tasks[index].text);
   };
 
-  const saveTask = (index) => {
+  const HandleSaveTask = (index) => {
     const trimmed = editText.trim();
-    if (
-      trimmed === "" ||
-      tasks.some((task, i) => task.text === trimmed && i !== index)
-    )
+    if (trimmed === "")
       return;
 
     const updated = [...tasks];
@@ -83,7 +82,7 @@ function Todo() {
 
   return (
     <div className="todo-container">
-      <h2 className="todo-title" ref={headingRef} onClick={changeColor}>
+      <h2 className="todo-title" ref={headingRef} onClick={HandleChangeColor}>
         Todo List
       </h2>
       <div className="input-wrapper">
@@ -115,12 +114,12 @@ function Todo() {
                     value={editText}
                     onChange={(e) => setEditText(e.target.value)}
                     onKeyDown={(e) => {
-                      if (e.key === "Enter") saveTask(index);
+                      if (e.key === "Enter") HandleSaveTask(index);
                     }}
                   />
                   <button
                     className="save-button"
-                    onClick={() => saveTask(index)}
+                    onClick={() => HandleSaveTask(index)}
                   >
                     Save
                   </button>
@@ -129,7 +128,7 @@ function Todo() {
                 <>
                   <span
                     className={`task-text ${task.completed ? "completed" : ""}`}
-                    onClick={() => CompleteTask(index)}
+                    onClick={() => HandleCompleteTask(index)}
                   >
                     {task.text}
                   </span>
@@ -147,7 +146,7 @@ function Todo() {
                   </button>
                   <button
                     className="task-button edit"
-                    onClick={() => editTask(index)}
+                    onClick={() => HandleEditTask(index)}
                   >
                     Edit
                   </button>

@@ -1,15 +1,12 @@
 import './App.css'
-
-import StopWatch from './StopWatch2.jsx'
 import Todo from "./Todo.jsx"
-
+import Sample from './Sample.jsx'
 
 function App() {
   return (
     <>
-    <Todo/>
+    <Sample/>
     </>
   )
 }
-
 export default App
