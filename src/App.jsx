@@ -1,8 +1,9 @@
 import './App.css'
 import Todo from './Todo'
 // main function
-function App() {
-  
+
+
+export default function App() {
   return (
     <>
     <Todo/>
@@ -10,4 +11,3 @@ function App() {
   )
 }
 
-export default App
